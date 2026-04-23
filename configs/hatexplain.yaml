@@ -1,0 +1,50 @@
+defaults:
+  - base_config.yaml
+  - override classifier: sentiment.yaml
+  - _self_  # This ensures the current config is merged properly
+
+
+logging:
+  save_steps:
+    eval_step: 5000
+
+output:
+  checkpoint_path: "outputs/sst2_checkpoint"
+
+dataset:
+  # STATUS: NON-FUNCTIONAL — requires manual data preparation.
+  #
+  # The original HF dataset (bsvaz/hatexplain-processed) is no longer available,
+  # and Hate-speech-CNERG/hatexplain uses a deprecated script loader that
+  # modern `datasets` versions refuse to run. The preprocessing script
+  # (scripts/preprocess_hatexplain.py) also cannot download the raw JSON (404).
+  #
+  # To use this config, manually prepare datasets/hatexplain/ with
+  # train.parquet, validation.parquet, test.parquet containing columns:
+  #   text (str), label (int: 0=neutral, 1=offensive, 2=hatespeech)
+  # The label integers must match the prompt mapping below.
+  name: "Hate-speech-CNERG/hatexplain"
+  local_path: "datasets/hatexplain"
+  labels: [ 0, 1, 2 ]
+  test_name: "test"
+  val_name: "validation"
+
+classifier:
+  main_prompt: |
+    Classify the following text as neutral, offensive or Hate speech:
+    <TEXT>
+    {text}
+    </TEXT>
+    provide answer in format:
+    <ANSWER>#Number</ANSWER>
+
+    where the number is:
+    0 - Neutral
+    1 - Offensive
+    2 - Hate speech
+  answer_prompt: |
+    <ANSWER>{label}</ANSWER>
+  options:
+    label: [ "0", "1", "2" ]
+  prefix: <SENTIMENT>
+  suffix: </SENTIMENT>

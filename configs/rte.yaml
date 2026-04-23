@@ -1,0 +1,42 @@
+defaults:
+  - base_config.yaml
+  - _self_  # This ensures the current config is merged properly
+
+logging:
+  save_steps:
+    eval_step: 1500
+
+output:
+  checkpoint_path: "outputs/rte_checkpoint"
+
+dataset:
+  name: "SetFit/rte"
+  val_name: "validation"
+  test_name: ""
+  labels: [0,1]
+
+
+classifier:
+  main_prompt: |
+    Given the premise:
+    <PREMISE>
+    {text1}
+    </PREMISE>
+    and hypothesis:
+    <HYPOTHESIS>
+    {text2}
+    </HYPOTHESIS>
+
+    is the hypothesis supported by premise
+    provide answer in format:
+    <ANSWER>#Number</ANSWER>
+
+    where the number is one of the following:
+    0 - entailment
+    1 - not entailment
+  answer_prompt: |
+    <ANSWER>{label}</ANSWER>
+  options:
+    label: ["0", "1"]
+  prefix: <ANSWER>
+  suffix: </ANSWER>

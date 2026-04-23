@@ -1,0 +1,42 @@
+defaults:
+  - base_config.yaml
+  - _self_  # This ensures the current config is merged properly
+
+logging:
+  save_steps:
+    eval_step: 120000
+
+output:
+  checkpoint_path: "outputs/qqp_checkpoint"
+
+dataset:
+  name: ["glue","qqp"]
+  test_name: ""
+  val_name: "validation"
+  labels: [0,1]
+  fields:
+    text1: "question1"
+    text2: "question2"
+
+classifier:
+  main_prompt: |
+    Given two queries:
+    <Query1>
+    {text1}
+    </Query1>
+    <Query2>
+    {text2}
+    </Query2>
+
+    is the pair or queries semantically equivalent?
+    provide answer in format:
+    <ANSWER>#Number</ANSWER>
+    where the number is one of the following:
+    0 - not equivalent
+    1 - equivalent
+  answer_prompt: |
+    <ANSWER>{label}</ANSWER>
+  options:
+    label: ["0", "1"]
+  prefix: <ANSWER>
+  suffix: </ANSWER>

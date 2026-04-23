@@ -1,0 +1,42 @@
+defaults:
+  - base_config.yaml
+  - _self_  # This ensures the current config is merged properly
+
+model:
+  id: "Qwen/Qwen2.5-72B-Instruct"
+
+logging:
+  save_steps:
+    eval_step: 1500
+
+output:
+  checkpoint_path: "outputs/rte_checkpoint"
+
+dataset:
+  name: ["glue","cola"]
+  val_name: "validation"
+  test_name: ""
+  labels: [0,1]
+  fields:
+    text: "sentence"
+
+
+classifier:
+  main_prompt: |
+    Is the following sentence linguistically acceptable?
+    <SENTENCE>
+    {text}
+    </SENTENCE>
+
+    Please provide your answer in the following format:
+    <ANSWER>#Number</ANSWER>
+
+    Where the number is:
+    0 - not acceptable
+    1 - acceptable
+  answer_prompt: |
+    <ANSWER>{label}</ANSWER>
+  options:
+    label: ["0", "1"]
+  prefix: <ANSWER>
+  suffix: </ANSWER>

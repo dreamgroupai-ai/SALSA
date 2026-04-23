@@ -1,0 +1,16 @@
+defaults:
+  - base_config.yaml
+  - override classifier: sentiment.yaml
+  - _self_  # This ensures the current config is merged properly
+
+dataset:
+  name: "SetFit/imdb"
+  val_name: "test"
+  labels: [0, 1]
+
+logging:
+  save_steps:
+    eval_step: 12500
+
+output:
+  checkpoint_path: "outputs/imdb_checkpoint"

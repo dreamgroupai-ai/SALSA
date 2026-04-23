@@ -1,0 +1,42 @@
+defaults:
+  - base_config.yaml
+  - _self_  # This ensures the current config is merged properly
+
+logging:
+  save_steps:
+    eval_step: 20800
+
+output:
+  checkpoint_path: "outputs/qnli_checkpoint"
+
+dataset:
+  name: [ "glue","qnli" ]
+  test_name: ""
+  val_name: "validation"
+  labels: [ 0,1 ]
+  fields:
+    text1: "question"
+    text2: "sentence"
+
+classifier:
+  main_prompt: |
+    Given the question:
+    <QUESTION>
+    {text1}
+    </QUESTION>
+    Does the following text answer the question?
+    <TEXT>
+    {text2}
+    </TEXT>
+
+    provide answer in format:
+    <ANSWER>#Number</ANSWER>
+    where the number is one of the following:
+    0 - Yes
+    1 - No
+  answer_prompt: |
+    <ANSWER>{label}</ANSWER>
+  options:
+    label: [ "0", "1" ]
+  prefix: <ANSWER>
+  suffix: </ANSWER>

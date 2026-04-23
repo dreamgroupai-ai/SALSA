@@ -1,0 +1,51 @@
+# Logs
+*.log
+nohup.out
+nohup*.out
+*.out
+infr.log
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Model cache & large data
+cache_model/
+unsloth_compiled_cache/
+
+# Experiment outputs
+outputs/
+wandb/
+zeroshot_submissions/
+datasets/
+
+# CSV results / misc data
+ensemble.csv
+
+# Environment / secrets
+.env
+
+# Virtual environments
+.venv/
+
+# OS / editor
+.DS_Store
+.cursor/
+.claude/
+.devcontainer/
+.idea/
+
+# Internal docs
+docs/plans/
+
+# Build artifacts
+*.egg-info/
+dist/
+build/
+
+# Poetry
+poetry.lock
+
+# Paper (LaTeX)
+paper/

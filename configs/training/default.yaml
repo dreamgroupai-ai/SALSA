@@ -1,0 +1,12 @@
+epochs: 6
+gradient_accumulation_steps: 25
+learning_rate: 1e-4
+weight_decay: 1e-4
+seed: 42
+save_total_limit: 2
+# Maximum sequence length for tokenization (uses left truncation to preserve labels)
+max_seq_length: 1024
+# Resume from last checkpoint if exists (default: true)
+resume: true
+# DeepSpeed config file path (null = no DeepSpeed; override in task-specific configs)
+deepspeed_config: null

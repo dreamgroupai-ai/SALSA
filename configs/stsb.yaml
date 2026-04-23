@@ -1,0 +1,42 @@
+defaults:
+  - base_config.yaml
+
+classifier:
+  main_prompt: |
+    Given the two sentences:
+    <sentence1>
+    {text1}
+    </sentence1>
+    <sentence2>
+    {text2}
+    </sentence2>
+    what is the relation between them?
+    provide answer in format:
+    <ANSWER>#Number</ANSWER>
+    where the number is one of the following:
+    0 - The two sentences are completely dissimilar.
+    1 - The two sentences are not equivalent, but are on thesame topic
+    2 - The two sentences are not equivalent, but share somedetails.
+    3 - The two sentences are roughly equivalent, but some important information differs/missing.
+    4 - The two sentences are mostly equivalent, but some unimportant details differ.
+    5 - The two sentences are completely equivalent, as they mean the same thing.
+  answer_prompt: |
+    <ANSWER>{label}</ANSWER>
+  options:
+    label: [ "0", "1","2", "3", "4", "5" ]
+
+dataset:
+  name: [ "glue","stsb" ]
+  labels: [ 0, 1, 2, 3 ,4 , 5 ]
+  val_name: "validation"
+  test_name: ""
+  fields:
+    text1: "sentence1"
+    text2: "sentence2"
+
+logging:
+  save_steps:
+    eval_step: 20000
+
+output:
+  checkpoint_path: "outputs/stsb_checkpoint"

@@ -1,0 +1,13 @@
+main_prompt: |
+  Classify the sentiment of the following text as positive or negative:
+  <TEXT>
+  {text}
+  </TEXT>
+  provide answer in format:
+  <SENTIMENT>positive|negative</SENTIMENT>
+answer_prompt: |
+  <SENTIMENT>{label}</SENTIMENT>
+options:
+  label: [ "negative", "positive" ]
+prefix: <SENTIMENT>
+suffix: </SENTIMENT>

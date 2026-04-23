@@ -1,0 +1,51 @@
+defaults:
+  - base_config.yaml
+  - _self_  # This ensures the current config is merged properly
+
+lora:
+  dropout: 0.25
+
+training:
+  gradient_accumulation_steps: 20
+  learning_rate: 1e-4
+logging:
+  save_steps:
+    eval_step: 100000
+
+output:
+  checkpoint_path: "outputs/medmcqa_checkpoint"
+
+
+dataset:
+  name: "openlifescienceai/medmcqa"
+  test_name: ""
+  val_name: "validation"
+  labels: [0,1,2,3]
+  fields:
+    optiona: "opa"
+    optionb: "opb"
+    optionc: "opc"
+    optiond: "opd"
+    label: "cop"
+
+
+classifier:
+  main_prompt: |
+    question:
+    "{question}"
+
+    Respond in the following format:
+    Answer: <ANSWER>
+
+    Where <ANSWER> is:
+    A - {optiona}
+    B - {optionb}
+    C - {optionc}
+    D - {optiond}
+
+  answer_prompt: |
+    ANSWER:{label}
+  options:
+    label: [" A", " B", " C", " D"]
+  prefix: <ANSWER>
+  suffix: </ANSWER>

@@ -1,0 +1,3 @@
+save_steps:
+  eval_step: 5000
+wandb_project: "salsa"

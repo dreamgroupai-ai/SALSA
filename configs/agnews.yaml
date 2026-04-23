@@ -1,0 +1,28 @@
+defaults:
+  - base_config.yaml
+  - _self_  # This ensures the current config is merged properly
+
+classifier:
+  main_prompt: |
+    Classify the following text as World News(0), Sports News(1), Business News(2) or Sci/Tech News(3):
+    <Text>
+    {text}
+    </Text>
+    provide answer in format:
+    <LABEL>label number</LABEL>
+  answer_prompt: |
+    <LABEL>{label}</LABEL>
+  options:
+    label: ["0", "1","2", "3"]
+
+dataset:
+  name: "SetFit/ag_news"
+  labels: [ 0, 1, 2, 3 ]
+  val_name: "test"
+
+logging:
+  save_steps:
+    eval_step: 20000
+
+output:
+  checkpoint_path: "outputs/agnews_checkpoint"

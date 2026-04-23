@@ -1,0 +1,20 @@
+defaults:
+  - base_config.yaml
+  - override classifier: sentiment.yaml
+  - _self_  # This ensures the current config is merged properly
+
+
+logging:
+  save_steps:
+    eval_step: 5000
+
+output:
+  checkpoint_path: "outputs/sst2_checkpoint"
+
+dataset:
+  name: [ "glue","sst2" ]
+  labels: [ 0, 1 ]
+  test_name: ""
+  val_name: "validation"
+  fields:
+    text: "sentence"

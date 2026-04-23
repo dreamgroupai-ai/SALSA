@@ -1,0 +1,7 @@
+id: "Qwen/Qwen3-0.6B"
+cache_dir: "cache_model"
+max_memory:
+    # Configure per your hardware, e.g.:
+    # 0: "24GiB"
+load_checkpoint: null
+merge_loaded_lora: false

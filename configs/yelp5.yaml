@@ -1,0 +1,28 @@
+defaults:
+  - base_config.yaml
+  - _self_  # This ensures the current config is merged properly
+
+logging:
+  save_steps:
+    eval_step: 100000
+
+output:
+  checkpoint_path: "outputs/yelp5_checkpoint"
+
+dataset:
+  name: "SetFit/yelp_review_full"
+  val_name: "test"
+  labels: [0, 1, 2, 3, 4]
+
+classifier:
+  main_prompt: |
+    How many stars the following review represent:
+    <REVIEW>
+    {text}
+    </REVIEW>
+    provide answer in format:
+    <RATING>rating star number, integer between 1 and 5</RATING>
+  answer_prompt: |
+    <RATING>{label}</RATING>
+  options:
+    label: ["1", "2", "3", "4", "5"]

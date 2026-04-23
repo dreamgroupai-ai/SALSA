@@ -1,0 +1,65 @@
+defaults:
+  - base_config.yaml
+  - _self_  # This ensures the current config is merged properly
+
+model:
+  id: "Qwen/Qwen3-8B"
+  load_checkpoint: None
+
+
+logging:
+  save_steps:
+    eval_step: 600
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+
+training:
+  save_total_limit: 5
+  learning_rate: 0.00005
+  per_device_eval_batch_size: 1
+  gradient_accumulation_steps: 50
+  max_seq_length: 8192
+  deepspeed_config: "ds_config_zero3.json"
+
+output:
+  checkpoint_path: "outputs/task13A_32_run32_checkpoint"
+
+dataset:
+  name: ["DaniilOr/SemEval-2026-Task13","A"]
+  local_path: "datasets/Task_A"  # Local parquet files path
+  val_name: "validation"
+  test_name: "test"
+  labels: [0,1]
+  # Balanced sampling configuration
+  balanced_sampling:
+    enabled: true
+    max_repetitions: 1  # Max times a sample can appear per epoch
+    balance_columns: ["original_label", "language"]  # Columns to balance on
+
+
+
+classifier:
+  main_prompt: |
+    /no_think
+    Given the code:
+    <CODE>
+    {code}
+    </CODE>
+
+    is the code machine generated?
+
+    provide answer in format:
+    <ANSWER>#Number</ANSWER>
+
+    where the number is one of the following:
+    0 - No
+    1 - Yes
+  answer_prompt: |
+    <ANSWER>{label}</ANSWER>
+  options:
+    label: ["0", "1"]
+  prefix: <ANSWER>
+  suffix: </ANSWER>

@@ -1,0 +1,38 @@
+defaults:
+  - base_config.yaml
+  - _self_  # This ensures the current config is merged properly
+
+logging:
+  save_steps:
+    eval_step: 5000
+
+output:
+  checkpoint_path: "outputs/mrpc_checkpoint"
+
+dataset:
+  name: "SetFit/mrpc"
+  test_name: "test"
+  val_name: "validation"
+  labels: [ 0,1 ]
+
+classifier:
+  main_prompt: |
+    Given two texts:
+    <Text 1>
+    {text1}
+    </Text 1>
+    <Text 2>
+    {text2}
+    </Text 2>
+    is the pair of texts equivalent?
+    provide answer in format:
+    <ANSWER>#Number</ANSWER>
+    where the number is one of the following:
+    0 - not equivalent
+    1 - equivalent
+  answer_prompt: |
+    <ANSWER>{label}</ANSWER>
+  options:
+    label: [ "0", "1" ]
+  prefix: <ANSWER>
+  suffix: </ANSWER>

@@ -1,0 +1,9 @@
+defaults:
+  - model: default
+  - training: default
+  - lora: default
+  - dataset: default
+  - classifier: default
+  - logging: default
+  - output: default
+  - _self_  # This ensures the current config is merged properly
