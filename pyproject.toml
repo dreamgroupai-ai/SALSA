@@ -15,7 +15,7 @@ omegaconf = ">=2.3.0"
 datasets = ">=3.2.0"
 wandb = ">=0.19.6"
 scikit-learn = ">=1.6.1"
-peft = "0.14.0"
+peft = ">=0.17.0"   # 0.14 predates transformers 4.55+ key layouts
 loguru = "0.7.3"
 numpy = "^2.1"
 pandas = "^2.2"
