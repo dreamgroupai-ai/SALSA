@@ -16,6 +16,7 @@ unsloth_compiled_cache/
 
 # Experiment outputs
 outputs/
+logs/
 wandb/
 zeroshot_submissions/
 datasets/
@@ -28,11 +29,14 @@ ensemble.csv
 
 # Virtual environments
 .venv/
+# run_jev.sh setup: vLLM 0.31 + CUDA 13.0 JIT toolkit
+.venv-vllm/
 
 # OS / editor
 .DS_Store
 .cursor/
-.claude/
+.claude/*
+!.claude/skills/
 .devcontainer/
 .idea/
 
